@@ -61,8 +61,7 @@
     </div>
   </div>
 
-    <script type="text/babel" data-presets="env,react">
-
+  <script type="text/babel" data-presets="env,react">
     const { useState, useEffect } = React;
     
     // --- ICON WRAPPERS (FontAwesome) ---
@@ -1165,7 +1164,7 @@
       );
     };
 
-            const Dashboard = ({ appData, getMenuLabel, isPublic, openFormModal, setSelectedItemDetail, handleShareAgenda, handleShareNotulen }) => {
+        const Dashboard = ({ appData, getMenuLabel, isPublic, openFormModal, setSelectedItemDetail, handleShareAgenda, handleShareNotulen }) => {
       const Search = IconWrapper('fa-solid fa-search');
       const Share2 = IconWrapper('fa-solid fa-share-nodes');
       
@@ -2399,15 +2398,31 @@
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
-  
-</script>
+  </script>
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Reg Failed', err));
+      });
+    }
 
-<script>
-  if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Reg Failed', err));
+    // Mencegah klik kanan
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
     });
-  }
-</script>
+
+    // Mencegah shortcut keyboard (F12, Ctrl+Shift+I, Ctrl+U)
+    document.addEventListener('keydown', function(e) {
+      if (e.keyCode == 123) { // F12
+        e.preventDefault();
+      }
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 73) { // Ctrl+Shift+I
+        e.preventDefault();
+      }
+      if (e.ctrlKey && e.keyCode == 85) { // Ctrl+U
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
