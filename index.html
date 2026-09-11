@@ -1578,6 +1578,12 @@
             if (result.status === 'success' && result.data) {
                setAppData(prev => {
                  const merged = { ...prev, ...result.data };
+                 
+                 // [OPTIMASI]: Cek apakah data benar-benar berubah untuk mencegah lag render
+                 if (JSON.stringify(prev) === JSON.stringify(merged)) {
+                   return prev;
+                 }
+                 
                  try {
                    localStorage.setItem('SISTEM_WARGA_DATA', JSON.stringify(merged));
                  } catch (e) {
